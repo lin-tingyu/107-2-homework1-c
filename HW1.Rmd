@@ -9,8 +9,8 @@ output:
       collapsed: true
       smooth_scroll: false
 params:
-  name: ["黃塏雯","明"]
-  id: [710761122,710661002]
+  name: ["黃塏雯","古詩青"]
+  id: [710761122,710761127,]
   group: "team1"
   url: ""
 ---
@@ -83,7 +83,19 @@ hw1Data <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/mas
 
 請進行OLS估計前述的簡單迴歸模型。（注意估計式標準誤必需使用穩健標準誤robust standard error，即使用三明治及HC調整後的標準誤。）
 
+```{r}
+microPR<-hw1Data$個經PR
+microOK<-hw1Data$可修個體
+preconPR<-hw1Data$經原PR
+```
+
+
 ```{r ans13}
+model_1 <- lm(microPR~microOK)
+model_1
+library(sandwich)
+library(lmtest)
+coeftest(model_1, vcov = vcovHC(model_1, type="HC"))
 ```
 
 ## 1.4 選擇性偏誤
