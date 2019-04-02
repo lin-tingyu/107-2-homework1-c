@@ -9,8 +9,8 @@ output:
       collapsed: true
       smooth_scroll: false
 params:
-  name: ["黃塏雯","明"]
-  id: [710761122,710661002]
+  name: ["黃塏雯","古詩青"]
+  id: [710761122,710761127,]
   group: "team1"
   url: ""
 ---
@@ -83,14 +83,31 @@ hw1Data <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/mas
 
 請進行OLS估計前述的簡單迴歸模型。（注意估計式標準誤必需使用穩健標準誤robust standard error，即使用三明治及HC調整後的標準誤。）
 
+```{r}
+microPR<-hw1Data$個經PR
+microOK<-hw1Data$可修個體
+preconPR<-hw1Data$經原PR
+```
+
+
 ```{r ans13}
+model_1 <- lm(microPR~microOK)
+model_1
+library(sandwich)
+library(lmtest)
+coeftest(model_1, vcov = vcovHC(model_1, type="HC"))
 ```
 
 ## 1.4 選擇性偏誤
 上題的估計結果很可能不正確，請說明原因故事（非數學證明）。
 
+修習個經的成績也會和微積分的成績有關，上題的估計遺漏了微積分這個變數對於個經成績的影響
+
+
 ## 1.5 選擇性偏誤
 這個資料還包含**經原PR**變數，它是學生最後修過的經原成績在該經原班的排名。說明有必要控制**經原PR**的理由（非數學證明）。
+
+立足點高的人（即「經原成績」高的）比較容易在各經成績拿高分, 所以單純比較實際經原成績和個體成績的差異，其中的差異除了反應經原學習效果外，也反應了立足點差異程度。
 
 
 ## 1.6 複迴歸模型
